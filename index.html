@@ -34,16 +34,24 @@
 
       ctx.globalCompositeOperation = 'destination-out';
 
+      p = (i, o) => {
+        r = f.getBoundingClientRect();
+        x = i - r.left;
+        y = o - r.top;
+        ctx.beginPath();
+        ctx.arc(x, y, 20, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.fillStyle = 'black';
+        ctx.fill();
+      };
+
+      f.addEventListener('touchmove', (e) => {
+        p(e.touches[0].clientX, e.touches[0].clientY);
+      });
+
       f.addEventListener('mousemove', (e) => {
         if (e.buttons) {
-          r = f.getBoundingClientRect();
-          x = e.clientX - r.left;
-          y = e.clientY - r.top;
-          ctx.beginPath();
-          ctx.arc(x, y, 20, 0, Math.PI * 2);
-          ctx.closePath();
-          ctx.fillStyle = 'black';
-          ctx.fill();
+          p(e.clientX, e.clientY);
         }
       });
     </script>
