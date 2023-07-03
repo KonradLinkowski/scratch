@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+      }
+      #f,
+      #b {
+        position: absolute;
+        translate: -50% -50%;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="b" width="256" height="256"></canvas>
+    <canvas id="f" width="256" height="256"></canvas>
+    <script>
+      bctx = b.getContext('2d');
+      bctx.font = '20px sans-serif';
+      bctx.textAlign = 'center';
+      bctx.fillText(
+        Math.random() < 0.1 ? 'You win' : 'You lose',
+        Math.random() * 200 + 23,
+        Math.random() * 200 + 23
+      );
+      ctx = f.getContext('2d');
+
+      ctx.fillStyle = 'red';
+      ctx.fillRect(0, 0, f.width, f.height);
+
+      ctx.globalCompositeOperation = 'destination-out';
+
+      f.addEventListener('mousemove', (e) => {
+        if (e.buttons) {
+          r = f.getBoundingClientRect();
+          x = e.clientX - r.left;
+          y = e.clientY - r.top;
+          ctx.beginPath();
+          ctx.arc(x, y, 20, 0, Math.PI * 2);
+          ctx.closePath();
+          ctx.fillStyle = 'black';
+          ctx.fill();
+        }
+      });
+    </script>
+  </body>
+</html>
